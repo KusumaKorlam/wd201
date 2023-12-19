@@ -17,7 +17,7 @@ describe("todoList", () => {
     const today = new Date();
      //referred to discord forum for this line of code
     add({
-      title: "Test todo",
+      title: "Test todo1",
       completed: false,
       dueDate: new Date(today.getTime() - 1 * oneDay).toLocaleDateString(
         "en-CA",
@@ -39,7 +39,7 @@ describe("todoList", () => {
   test("Should add new todo", () => {
     const todoItemsCount = all.length;
     add({
-      title: "Test todo",
+      title: "Test todo1",
       completed: false,
       dueDate: new Date().toLocaleDateString("en-CA"),
     });
@@ -53,7 +53,7 @@ describe("todoList", () => {
   test("checks return a list of overdue todos", () => {
     const overDueTodoItemsCount =overdue().length;
     add({
-        title: "Test todo",
+        title: "Test todo1",
         completed: false,
         dueDate: new Date(today.getTime() - 1 * oneDay).toLocaleDateString(
           "en-CA",
