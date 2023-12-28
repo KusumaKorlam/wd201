@@ -11,27 +11,27 @@ const { all, markAsComplete, add, overdue,
     dueToday,
     dueLater } = todoList();
 const today = new Date(); 
-const oneDay= 60 * 60 * 24 * 1000;
+const one_Day= 60 * 60 * 24 * 1000;
 describe("todoList", () => {
   beforeAll(() => {
     const today = new Date();
      //referred to discord forum for this line of code
     add({
-      title: "Test todo1",
+      title: "Tests todo1",
       completed: false,
-      dueDate: new Date(today.getTime() - 1 * oneDay).toLocaleDateString(
+      dueDate: new Date(today.getTime() - 1 * one_Day).toLocaleDateString(
         "en-CA",
       ),
     });
     add({
-      title: "Test todo2",
+      title: "Tests todo2",
       completed: false,
-      dueDate: new Date(today.getTime() + 1 * oneDay).toLocaleDateString(
+      dueDate: new Date(today.getTime() + 1 * one_Day).toLocaleDateString(
         "en-CA",
       ),
     });
     add({
-      title: "Test todo3",
+      title: "Tests todo3",
       completed: false,
       dueDate: new Date().toLocaleDateString("en-CA"),
     });
@@ -39,7 +39,7 @@ describe("todoList", () => {
   test("Should add new todo", () => {
     const todoItemsCount = all.length;
     add({
-      title: "Test todo1",
+      title: "Tests todo1",
       completed: false,
       dueDate: new Date().toLocaleDateString("en-CA"),
     });
@@ -53,9 +53,9 @@ describe("todoList", () => {
   test("checks return a list of overdue todos", () => {
     const overDueTodoItemsCount =overdue().length;
     add({
-        title: "Test todo1",
+        title: "Tests todo1",
         completed: false,
-        dueDate: new Date(today.getTime() - 1 * oneDay).toLocaleDateString(
+        dueDate: new Date(today.getTime() - 1 * one_Day).toLocaleDateString(
           "en-CA",
         ),
       });
@@ -64,7 +64,7 @@ describe("todoList", () => {
   test("checks return a list of todos due today", () => {
     const duetodayTodoItemsCount =dueToday().length;
     add({
-        title: "Test todo3",
+        title: "Tests todo3",
         completed: false,
         dueDate: new Date().toLocaleDateString("en-CA"),
       });
@@ -73,9 +73,9 @@ describe("todoList", () => {
   test("checks return a list of todos due later", () => {
     const dueLaterTodoItemsCount =dueLater().length;
     add({
-        title: "Test todo2",
+        title: "Tests todo2",
         completed: false,
-        dueDate: new Date(today.getTime() + 2 * oneDay)
+        dueDate: new Date(today.getTime() + 2 * one_Day)
         .toISOString()
         .slice(0, 10),
       });
