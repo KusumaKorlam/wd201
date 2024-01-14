@@ -1,0 +1,78 @@
+<!DOCTYPE html>  
+<html lang=" "en>
+    <head>
+        <meta charset = "UTF-8">
+        <title>TODO</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <meta name = "csrf-token" content="<%= csrfToken %>" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            var token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            function updateTodo(id) {
+                let dec=document.querySelector(`#todo-checkbox-${id}`).checked
+                fetch(`/todos/${id}`,{
+                    method:"put",
+                    headers:{"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        _csrf:token,
+                        completed: dec
+                    })
+                })
+                .then((rest)=>{
+                    if(rest.ok){
+                        window.location.reload();
+                    }   
+                    
+                })
+                .catch((err)=>console.error(err));
+            }
+            function deleteTodo(id) {
+                fetch(`/todos/${id}`,{
+                    method: "delete",
+                    headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify({
+                        "_csrf": token,
+                    })
+            })
+                    .then((rest) => {
+                    if (rest.ok) {
+                        window.location.reload();
+                    }
+                })
+                    .catch((err) => console.error(err));
+                }
+        </script>
+    </head>
+    <body> 
+        <div class = "grid grid-cols-6">
+            <div class = "col-start-3 col-span-2">  
+                <%- include('header.ejs')%>
+                <a href="/signout">Signout</a>
+                <form action="/todos" method= "post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" required/>
+                    <div class="flex gap-2 py-4">
+                        <div class = "flex-auto">
+                            <input type = "text" name = "title" placeholder="What's next?" class= "border border-gray-900 rounded text-gray-900 p-2 w-full text-sm" required />
+                        </div>
+                        <div class = "flex-auto">
+                            <input type = "date" name = "DUEDate" class = "border border-gray-900 rounded text-gray-900 p-2 w-full text-sm leading-4" required/>
+                        </div>
+                        <div class = "flex-none">
+                            <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Add</button> 
+                        </div>
+                    </div>
+                 </form>
+                 <%- include("todo.ejs",{title:"Overdue", data:overdue , id:"count-overdue"}) %>
+                 <%- include("todo.ejs",{title:"Due Today", data:dueToday, id:"count-due-today"}) %>
+                 <%- include("todo.ejs",{title:"Due Later", data:dueLater, id:"count-due-later"}) %>
+                 <%- include("todo.ejs",{title:"Completed Items", data:completeditems,id:"count-completed"}) %>
+                 <%- include('footer.ejs') %>
+            </div>
+        </div>
+    </body>
+</html>
